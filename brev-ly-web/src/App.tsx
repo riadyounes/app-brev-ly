@@ -1,11 +1,14 @@
-import { Button } from "./components/button";
+import { Route, Routes } from "react-router-dom";
+import { NotFound } from "./pages/404";
+import { Home } from "./pages/home";
 
 export function App() {
   return (
-    <div className="h-dvh flex flex-col items-center justify-center p-10 bg-gray-200">
-      <h1>Hello Word</h1>
-      <Button variant="primary" className="w-full" >Label</Button>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      {/* <Route path="/item/:id" element={<Item />} /> */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   )
 }
 
