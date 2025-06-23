@@ -4,14 +4,15 @@ import { type ButtonHTMLAttributes } from 'react'
 const button = tv({
   base: [
     'rounded-lg px-5 py-2 text-sm font-semibold outline-none shadow-sm',
-    'focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-violet-500',
+    'focus-visible:ring-1 transition-colors',
   ],
   variants: {
     variant: {
       primary:
         'bg-blue-500 text-white hover:bg-blue-700 disabled:bg-blue-500/50',
       secondary:
-        'border border-zinc-300 text-zinc-700 hover:bg-zinc-50 dark:border-zinc-700 dark:text-zinc-400 dark:hover:bg-zinc-800',
+        'bg-gray-200 text-gray-500 border border-gray-200 hover:border-blue-500 disabled:bg-gray-200/50 rounded-sm px-2',
+      icon: 'bg-gray-200 text-gray-600 border border-gray-200 hover:border-blue-500 p-2 rounded-sm',
     },
   },
   defaultVariants: {
