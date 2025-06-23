@@ -5,7 +5,7 @@ export function LinkList() {
   const isEmptyList = true
 
   return (
-    <div className="w-full rounded-lg bg-gray-100 p-8 flex flex-col gap-4">
+    <div className="max-w-[580px] w-full rounded-lg bg-gray-100 p-8 flex flex-col gap-4">
       <div className="flex items-center justify-between">
         <h2 className="font-bold text-lg text-gray-600">Meus links</h2>
         <Button variant="secondary" className="flex items-center">
