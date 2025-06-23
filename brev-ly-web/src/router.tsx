@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import { NotFound } from './pages/404'
 
-
 export const router = createBrowserRouter([
   {
     path: '/',
@@ -10,12 +9,12 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <div>Welcome to the Home Page</div>
+        element: <div>Welcome to the Home Page</div>,
       },
       {
         path: ':id',
-        element: <div>Detail Page</div>
-      } 
-    ]
-  }
+        element: <div>Detail Page</div>,
+      },
+    ],
+  },
 ])

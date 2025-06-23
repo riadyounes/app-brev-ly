@@ -1,7 +1,7 @@
-import { Route, Routes } from "react-router-dom";
-import { NotFound } from "./pages/404";
-import { Home } from "./pages/home";
-import { Redirect } from "./pages/redirect";
+import { Route, Routes } from 'react-router-dom'
+import { NotFound } from './pages/404'
+import { Home } from './pages/home'
+import { Redirect } from './pages/redirect'
 
 export function App() {
   return (
@@ -12,4 +12,3 @@ export function App() {
     </Routes>
   )
 }
-

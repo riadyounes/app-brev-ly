@@ -21,8 +21,7 @@ const button = tv({
 
 export interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof button> {
-}
+    VariantProps<typeof button> {}
 
 export function Button({ variant, className, ...props }: ButtonProps) {
   return <button {...props} className={button({ variant, className })} />
