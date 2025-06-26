@@ -1,5 +1,6 @@
 import { Button } from './ui/button'
 import Input from './ui/input'
+import InputWithPrefix from './ui/input-with-prefix'
 
 export function LinkForm() {
   return (
@@ -8,7 +9,7 @@ export function LinkForm() {
       <form className="flex flex-col gap-6">
         <div className="flex flex-col gap-4">
           <Input label="Link original" placeholder="www.exemplo.com.br" />
-          <Input label="Link encurtado" placeholder="brev.ly/" />
+          <InputWithPrefix label="Link encurtado" prefix="brev.ly/" />
         </div>
         <Button className="w-full">Salvar link</Button>
       </form>
