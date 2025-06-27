@@ -15,8 +15,8 @@ type GetLinksInput = z.input<typeof getLinksInput>
 type GetLinksOutput = {
   links: {
     id: string
-    remoteKey: string
-    remoteUrl: string
+    originalUrl: string
+    shortUrl: string
     accessCount: number
     createdAt: Date
   }[]
@@ -30,8 +30,8 @@ export async function getLinks(
   const links = await db
     .select({
       id: schema.links.id,
-      remoteKey: schema.links.shortUrl,
-      remoteUrl: schema.links.originalUrl,
+      shortUrl: schema.links.shortUrl,
+      originalUrl: schema.links.originalUrl,
       accessCount: schema.links.accessCount,
       createdAt: schema.links.createdAt,
     })
