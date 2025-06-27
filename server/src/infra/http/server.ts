@@ -16,7 +16,7 @@ const server = fastify()
 server.setValidatorCompiler(validatorCompiler)
 server.setSerializerCompiler(serializerCompiler)
 
-server.setErrorHandler((error, request, reply) => {
+server.setErrorHandler((error, _request, reply) => {
   if (hasZodFastifySchemaValidationErrors(error)) {
     return reply.status(400).send({
       message: 'Validation error',
