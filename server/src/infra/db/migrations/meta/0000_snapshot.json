@@ -1,5 +1,5 @@
 {
-  "id": "6f50996e-21b8-428a-90a8-941505071cfe",
+  "id": "ba79f786-43d1-4c2d-bc46-a549cb044852",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -28,10 +28,10 @@
         },
         "access_count": {
           "name": "access_count",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true,
-          "default": "'0'"
+          "default": 0
         },
         "created_at": {
           "name": "created_at",
