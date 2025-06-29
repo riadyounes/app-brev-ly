@@ -10,6 +10,7 @@ import {
 } from 'fastify-type-provider-zod'
 import { createLinkRoute } from './routes/create-link'
 import { deleteLinkRoute } from './routes/delete-link'
+import { getLinkByShortUrlRoute } from './routes/get-link-by-short-url'
 import { getLinksRoute } from './routes/get-links'
 import { transformSwaggerSchema } from './transform-swagger-schema'
 
@@ -51,6 +52,7 @@ server.register(fastifySwaggerUi, {
 server.register(getLinksRoute)
 server.register(createLinkRoute)
 server.register(deleteLinkRoute)
+server.register(getLinkByShortUrlRoute)
 
 server.listen({ port: 3333, host: '0.0.0.0' }).then(() => {
   console.log('Server is running on port 3333')
