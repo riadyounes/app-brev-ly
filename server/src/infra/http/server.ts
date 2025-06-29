@@ -8,8 +8,8 @@ import {
   serializerCompiler,
   validatorCompiler,
 } from 'fastify-type-provider-zod'
-import { deleteLinkRoute } from '@/app/functions/delete-link'
 import { createLinkRoute } from './routes/create-link'
+import { deleteLinkRoute } from './routes/delete-link'
 import { getLinksRoute } from './routes/get-links'
 import { transformSwaggerSchema } from './transform-swagger-schema'
 

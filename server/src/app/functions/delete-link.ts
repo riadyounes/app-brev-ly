@@ -1,31 +1,35 @@
-import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
-import { z } from 'zod/v4'
-import { unwrapEither } from '@/infra/shared/either'
-import { createLink } from './create-link'
+import { eq } from 'drizzle-orm'
+import { z } from 'zod'
+import { db } from '@/infra/db'
+import { schema } from '@/infra/db/schemas'
+import type { Either } from '@/infra/shared/either'
+import { makeRight } from '@/infra/shared/either'
+import { BadRequestError } from './errors/bad-request-error'
 
-export const deleteLinkRoute: FastifyPluginAsyncZod = async (server, _opts) => {
-  server.post(
-    '/links',
-    {
-      schema: {
-        summary: 'Create a new link',
-        tags: ['Links'],
-        body: z.object({
-          originalUrl: z.string(),
-          shortUrl: z.string().min(3).max(20),
-        }),
-      },
-    },
-    async (request, reply) => {
-      const { originalUrl, shortUrl } = request.body as {
-        originalUrl: string
-        shortUrl: string
-      }
+const deleteLinkInput = z.object({
+  shortUrl: z.string(),
+})
 
-      const result = await createLink({ originalUrl, shortUrl })
-      const data = unwrapEither(result)
+type DeleteLinkInput = z.input<typeof deleteLinkInput>
 
-      return reply.status(201).send(data)
-    }
-  )
+type DeleteLinkOutput = {
+  shortUrl: string
+}
+
+export async function deleteLink(
+  input: DeleteLinkInput
+): Promise<Either<never, DeleteLinkOutput>> {
+  const { shortUrl } = deleteLinkInput.parse(input)
+
+  const existing = await db.query.links.findFirst({
+    where: (links, { eq }) => eq(links.shortUrl, shortUrl),
+  })
+
+  if (!existing) {
+    throw new BadRequestError('Essa URL encurtada não existe')
+  }
+
+  await db.delete(schema.links).where(eq(schema.links.shortUrl, shortUrl))
+
+  return makeRight({ shortUrl })
 }
