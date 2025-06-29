@@ -1,11 +1,11 @@
 import type { FastifyPluginAsyncZod } from 'fastify-type-provider-zod'
 import { z } from 'zod/v4'
-import { createLink } from '@/app/functions/create-link'
 import { unwrapEither } from '@/infra/shared/either'
+import { createLink } from './create-link'
 
-export const createLinkRoute: FastifyPluginAsyncZod = async (server, _opts) => {
+export const deleteLinkRoute: FastifyPluginAsyncZod = async (server, _opts) => {
   server.post(
-    '/links2',
+    '/links',
     {
       schema: {
         summary: 'Create a new link',
