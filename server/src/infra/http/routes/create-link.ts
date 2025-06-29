@@ -5,7 +5,7 @@ import { unwrapEither } from '@/infra/shared/either'
 
 export const createLinkRoute: FastifyPluginAsyncZod = async (server, _opts) => {
   server.post(
-    '/links2',
+    '/links',
     {
       schema: {
         summary: 'Create a new link',
