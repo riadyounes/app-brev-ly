@@ -3,6 +3,7 @@ import { db } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
 import type { Either } from '@/infra/shared/either'
 import { makeRight } from '@/infra/shared/either'
+import { BadRequestError } from './errors/bad-request-error'
 
 const createLinkInput = z.object({
   originalUrl: z.string().url(),
@@ -36,7 +37,7 @@ export async function createLink(
   })
 
   if (existing) {
-    throw new Error('Essa URL encurtada já existe')
+    throw new BadRequestError('Essa URL encurtada já existe')
   }
 
   const link = await db
