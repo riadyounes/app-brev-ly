@@ -23,8 +23,8 @@ interface LinkListProps {
 export function LinkList({ links }: LinkListProps) {
   const isEmptyList = links.length === 0
 
-  function handleCopy(url: string) {
-    navigator.clipboard.writeText(url)
+  function handleCopy(shortUrl: string) {
+    navigator.clipboard.writeText(`localhost:5173/redirect/${shortUrl}`)
     toast.success('Link copiado para a área de transferência!')
   }
 
@@ -71,7 +71,7 @@ export function LinkList({ links }: LinkListProps) {
               <div key={link.id} className="flex items-center gap-5">
                 <div className="flex flex-col gap-1 flex-1">
                   <a
-                    href={link.shortUrl}
+                    href={`localhost:5173/redirect/${link.shortUrl}`}
                     className="text-blue-500 text-sm"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -88,7 +88,7 @@ export function LinkList({ links }: LinkListProps) {
                 <div className="flex items-center gap-1">
                   <Button
                     variant="icon"
-                    onClick={() => handleCopy(link.originalUrl)}
+                    onClick={() => handleCopy(link.shortUrl)}
                   >
                     <CopyIcon />
                   </Button>

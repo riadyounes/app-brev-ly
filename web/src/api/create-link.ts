@@ -5,6 +5,6 @@ export interface CreateLinkRequest {
   originalUrl: string
 }
 
-export async function CreateLink({ shortUrl, originalUrl }: CreateLinkRequest) {
+export async function createLink({ shortUrl, originalUrl }: CreateLinkRequest) {
   await api.post('/links', { shortUrl, originalUrl })
 }

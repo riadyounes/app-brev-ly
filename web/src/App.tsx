@@ -11,7 +11,7 @@ export function App() {
     <QueryClientProvider client={queryClient}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/redirect/:id" element={<Redirect />} />
+        <Route path="/redirect/:shortUrl" element={<Redirect />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       <Toaster richColors />

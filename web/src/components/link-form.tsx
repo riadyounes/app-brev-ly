@@ -5,7 +5,7 @@ import InputWithPrefix from './ui/input-with-prefix'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useMutation } from '@tanstack/react-query'
-import { CreateLink } from '@/api/create-link'
+import { createLink } from '@/api/create-link'
 import { queryClient } from '@/lib/react-query'
 import { toast } from 'sonner'
 
@@ -32,7 +32,7 @@ export function LinkForm() {
   })
 
   const { mutateAsync: createLinkFn } = useMutation({
-    mutationFn: CreateLink,
+    mutationFn: createLink,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['links'] })
       toast.success('Link criado com sucesso!')
