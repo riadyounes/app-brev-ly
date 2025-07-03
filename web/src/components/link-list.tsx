@@ -5,38 +5,22 @@ import {
   TrashIcon,
 } from '@phosphor-icons/react/dist/ssr'
 import { Button } from './ui/button'
+import { getLinks } from '@/api/get-link'
+import { useQuery } from '@tanstack/react-query'
 
 export function LinkList() {
-  const isEmptyList = true
+  const {
+    data: result,
+    // isFetching: isFetchingLinks,
+    // isLoading: isLoadingLinks,
+  } = useQuery({
+    queryKey: ['links'],
+    queryFn: () => getLinks(),
+  })
 
-  const links = [
-    {
-      original: 'https://example.com',
-      short: 'https://brev.ly/abc123',
-      accessCount: 42,
-    },
-    {
-      original: 'https://another-site.com/page',
-      short: 'https://brev.ly/xyz789',
-      accessCount: 17,
-    },
-    {
-      original: 'https://meusite.com/blog/post',
-      short: 'https://brev.ly/def456',
-      accessCount: 8,
-    },
-    {
-      original: 'https://empresa.com/contato',
-      short: 'https://brev.ly/ghi321',
-      accessCount: 25,
-    },
-    {
-      original: 'https://produto.com/oferta',
-      short: 'https://brev.ly/jkl654',
-      accessCount: 63,
-    },
-  ]
+  const isEmptyList = !result || result.links.length === 0
 
+  console.log(result)
   return (
     <div className="md:max-w-[580px] w-full rounded-lg bg-gray-100 p-8 flex flex-col gap-4">
       <div className="flex items-center justify-between">
@@ -60,20 +44,22 @@ export function LinkList() {
       )}
       {!isEmptyList && (
         <div className="flex flex-col gap-4">
-          {links.map((link, idx) => (
+          {result.links.map((link) => (
             <>
               <div className="w-full border-b border-gray-200" />
-              <div key={link.short + idx} className="flex items-center gap-5">
+              <div key={link.id} className="flex items-center gap-5">
                 <div className="flex flex-col gap-1 flex-1">
                   <a
-                    href={link.short}
+                    href={link.shortUrl}
                     className="text-blue-500 text-sm"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    {link.short}
+                    {link.shortUrl}
                   </a>
-                  <span className="text-gray-500 text-xs">{link.original}</span>
+                  <span className="text-gray-500 text-xs">
+                    {link.originalUrl}
+                  </span>
                 </div>
                 <span className="text-xs text-gray-500">
                   {link.accessCount} acessos
