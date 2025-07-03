@@ -4,7 +4,7 @@ import { db } from '@/infra/db'
 import { schema } from '@/infra/db/schemas'
 import type { Either } from '@/infra/shared/either'
 import { makeRight } from '@/infra/shared/either'
-import { BadRequestError } from './errors/bad-request-error'
+import { NotFoundError } from './errors/not-found-error'
 
 const deleteLinkInput = z.object({
   shortUrl: z.string(),
@@ -26,7 +26,7 @@ export async function deleteLink(
   })
 
   if (!existing) {
-    throw new BadRequestError('Essa URL encurtada não existe')
+    throw new NotFoundError('Essa URL encurtada não existe')
   }
 
   await db.delete(schema.links).where(eq(schema.links.shortUrl, shortUrl))

@@ -24,7 +24,7 @@ export function LinkList({ links }: LinkListProps) {
   const isEmptyList = links.length === 0
 
   function handleCopy(shortUrl: string) {
-    navigator.clipboard.writeText(`localhost:5173/redirect/${shortUrl}`)
+    navigator.clipboard.writeText(`http://localhost:5173/redirect/${shortUrl}`)
     toast.success('Link copiado para a área de transferência!')
   }
 
@@ -71,7 +71,7 @@ export function LinkList({ links }: LinkListProps) {
               <div key={link.id} className="flex items-center gap-5">
                 <div className="flex flex-col gap-1 flex-1">
                   <a
-                    href={`localhost:5173/redirect/${link.shortUrl}`}
+                    href={`http://localhost:5173/redirect/${link.shortUrl}`}
                     className="text-blue-500 text-sm"
                     target="_blank"
                     rel="noopener noreferrer"
