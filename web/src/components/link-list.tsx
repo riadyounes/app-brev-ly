@@ -9,18 +9,13 @@ import { getLinks } from '@/api/get-link'
 import { useQuery } from '@tanstack/react-query'
 
 export function LinkList() {
-  const {
-    data: result,
-    // isFetching: isFetchingLinks,
-    // isLoading: isLoadingLinks,
-  } = useQuery({
+  const { data: result } = useQuery({
     queryKey: ['links'],
     queryFn: () => getLinks(),
   })
 
   const isEmptyList = !result || result.links.length === 0
 
-  console.log(result)
   return (
     <div className="md:max-w-[580px] w-full rounded-lg bg-gray-100 p-8 flex flex-col gap-4">
       <div className="flex items-center justify-between">
