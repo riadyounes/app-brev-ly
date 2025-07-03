@@ -31,14 +31,15 @@ export function LinkForm() {
     resolver: zodResolver(createLinkFormSchema),
   })
 
-  const { mutateAsync: createLinkFn } = useMutation({
-    mutationFn: createLink,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['links'] })
-      toast.success('Link criado com sucesso!')
-      reset()
-    },
-  })
+  const { mutateAsync: createLinkFn, isPending: isPendingCreateLink } =
+    useMutation({
+      mutationFn: createLink,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ['links'] })
+        toast.success('Link criado com sucesso!')
+        reset()
+      },
+    })
 
   async function handleCreateLink({
     originalUrl,
@@ -74,7 +75,7 @@ export function LinkForm() {
             errorMessage={errors.shortUrl?.message}
           />
         </div>
-        <Button className="w-full" type="submit">
+        <Button className="w-full" type="submit" disabled={isPendingCreateLink}>
           Salvar link
         </Button>
       </form>
