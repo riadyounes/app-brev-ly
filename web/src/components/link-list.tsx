@@ -5,8 +5,9 @@ import {
   TrashIcon,
 } from '@phosphor-icons/react/dist/ssr'
 import { Button } from './ui/button'
-import { getLinks } from '@/api/get-link'
+import { getLinks } from '@/api/get-links'
 import { useQuery } from '@tanstack/react-query'
+import { toast } from 'sonner'
 
 export function LinkList() {
   const { data: result } = useQuery({
@@ -15,6 +16,11 @@ export function LinkList() {
   })
 
   const isEmptyList = !result || result.links.length === 0
+
+  function handleCopy(url: string) {
+    navigator.clipboard.writeText(url)
+    toast.success('Link copiado para a área de transferência!')
+  }
 
   return (
     <div className="md:max-w-[580px] w-full rounded-lg bg-gray-100 p-8 flex flex-col gap-4">
@@ -60,7 +66,10 @@ export function LinkList() {
                   {link.accessCount} acessos
                 </span>
                 <div className="flex items-center gap-1">
-                  <Button variant="icon">
+                  <Button
+                    variant="icon"
+                    onClick={() => handleCopy(link.originalUrl)}
+                  >
                     <CopyIcon />
                   </Button>
                   <Button variant="icon">
