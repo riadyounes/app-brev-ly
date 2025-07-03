@@ -6,8 +6,10 @@ import {
 } from '@phosphor-icons/react/dist/ssr'
 import { Button } from './ui/button'
 import { getLinks } from '@/api/get-links'
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import { deleteLink } from '@/api/delete-link'
+import { queryClient } from '@/lib/react-query'
 
 export function LinkList() {
   const { data: result } = useQuery({
@@ -21,6 +23,14 @@ export function LinkList() {
     navigator.clipboard.writeText(url)
     toast.success('Link copiado para a área de transferência!')
   }
+
+  const { mutateAsync: deleteLinkFn } = useMutation({
+    mutationFn: deleteLink,
+    onSuccess: async () => {
+      queryClient.invalidateQueries({ queryKey: ['links'] })
+      toast.success('Link deletado com sucesso!')
+    },
+  })
 
   return (
     <div className="md:max-w-[580px] w-full rounded-lg bg-gray-100 p-8 flex flex-col gap-4">
@@ -72,7 +82,10 @@ export function LinkList() {
                   >
                     <CopyIcon />
                   </Button>
-                  <Button variant="icon">
+                  <Button
+                    variant="icon"
+                    onClick={() => deleteLinkFn({ shortUrl: link.shortUrl })}
+                  >
                     <TrashIcon />
                   </Button>
                 </div>
