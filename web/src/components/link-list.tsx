@@ -32,6 +32,12 @@ export function LinkList() {
     },
   })
 
+  async function handleDelete(link: { shortUrl: string }) {
+    if (window.confirm('Tem certeza que deseja deletar este link?')) {
+      await deleteLinkFn({ shortUrl: link.shortUrl })
+    }
+  }
+
   return (
     <div className="md:max-w-[580px] w-full rounded-lg bg-gray-100 p-8 flex flex-col gap-4">
       <div className="flex items-center justify-between">
@@ -84,7 +90,7 @@ export function LinkList() {
                   </Button>
                   <Button
                     variant="icon"
-                    onClick={() => deleteLinkFn({ shortUrl: link.shortUrl })}
+                    onClick={() => handleDelete({ shortUrl: link.shortUrl })}
                   >
                     <TrashIcon />
                   </Button>
