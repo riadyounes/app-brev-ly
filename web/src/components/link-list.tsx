@@ -1,23 +1,27 @@
+import { deleteLink } from '@/api/delete-link'
+import { queryClient } from '@/lib/react-query'
 import {
   CopyIcon,
   DownloadSimpleIcon,
   Link,
   TrashIcon,
 } from '@phosphor-icons/react/dist/ssr'
-import { Button } from './ui/button'
-import { getLinks } from '@/api/get-links'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
-import { deleteLink } from '@/api/delete-link'
-import { queryClient } from '@/lib/react-query'
+import { Button } from './ui/button'
 
-export function LinkList() {
-  const { data: result } = useQuery({
-    queryKey: ['links'],
-    queryFn: () => getLinks(),
-  })
+interface LinkListProps {
+  links: {
+    id: string
+    shortUrl: string
+    originalUrl: string
+    accessCount: number
+    createdAt: Date | null
+  }[]
+}
 
-  const isEmptyList = !result || result.links.length === 0
+export function LinkList({ links }: LinkListProps) {
+  const isEmptyList = links.length === 0
 
   function handleCopy(url: string) {
     navigator.clipboard.writeText(url)
@@ -61,7 +65,7 @@ export function LinkList() {
       )}
       {!isEmptyList && (
         <div className="flex flex-col gap-4">
-          {result.links.map((link) => (
+          {links.map((link) => (
             <>
               <div className="w-full border-b border-gray-200" />
               <div key={link.id} className="flex items-center gap-5">
