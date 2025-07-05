@@ -1,4 +1,4 @@
-FROM node:22.15.1-slim AS base
+FROM node:20.18 AS base
 
 RUN npm i -g pnpm
 

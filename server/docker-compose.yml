@@ -1,11 +1,42 @@
 services:
-  pg:
-    image: bitnami/postgresql:latest
+  db:
+    image: postgres:latest
+    container_name: postgres
+    restart: unless-stopped
     ports:
-      - "5432:5432"
+      - $POSTGRES_PORT:$POSTGRES_PORT
     environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=brev_ly
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - POSTGRES_DB=$POSTGRES_DB
     volumes:
-      - "./docker:/docker-entrypoint-initdb.d"
+      - db:/var/lib/postgresql/data
+    networks:
+      - brev-ly-server
+      - db
+
+  app:
+    build: .
+    depends_on:
+      - db
+    container_name: brev-ly-server
+    restart: unless-stopped
+    ports:
+      - $PORT:$PORT
+    environment:
+      - DATABASE_URL=postgres://$POSTGRES_USER:$POSTGRES_PASSWORD@db:$POSTGRES_PORT/$POSTGRES_DB
+      - CLOUDFLARE_ACCESS_KEY_ID=$CLOUDFLARE_ACCESS_KEY_ID
+      - CLOUDFLARE_SECRET_ACCESS_KEY=$CLOUDFLARE_SECRET_ACCESS_KEY
+      - CLOUDFLARE_BUCKET=$CLOUDFLARE_BUCKET
+      - CLOUDFLARE_ACCOUNT_ID=$CLOUDFLARE_ACCOUNT_ID
+      - CLOUDFLARE_PUBLIC_URL=$CLOUDFLARE_PUBLIC_URL
+    networks:
+      - brev-ly-server
+
+volumes:
+  db:
+networks:
+  brev-ly-server:
+    driver: bridge
+  db:
+    driver: bridge
